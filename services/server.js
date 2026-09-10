@@ -1,7 +1,6 @@
-require("dotenv").config();
 const app = require("./src/app");
 const env = require("./src/config/env.js");
-  
+
 app.listen(env.server.port, () => {
   console.log(`Server running at http://${env.server.host}:${env.server.port}`);
 });
