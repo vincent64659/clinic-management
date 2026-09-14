@@ -44,17 +44,17 @@ const findAccountByUsername = async (username) => {
   return rows[0] || null;
 };
 
-const updateAccount = async (id, username, password) => {
+const updateAccount = async (id, username, pasword) => {
   if (!Id) {
     throw new Error(" Accounts ID is required");
   }
 
-  const [result] = await db.query(UPDATE_ACCOUNT, [username, password, id]);
+  const [result] = await db.query(UPDATE_ACCOUNT, [username, pasword, id]);
 
   return result;
 };
 
-const deleteAccount = async (id) => {
+const deleteAccount = async (id,where_id) => {
   if (!Where) {
     throw new Error(" Accounts ID is required");
   }
@@ -68,7 +68,6 @@ module.exports = {
   createAccount,
   findAllAccounts,
   findAccountById,
-  findAccountByUsername,
   updateAccount,
   deleteAccount,
 };

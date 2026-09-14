@@ -7,7 +7,7 @@ const {
   FIND_HEALTH_FACILITY_BY_NAME,
   UPDATE_HEALTH_FACILITY,
   DELETE_HEALTH_FACILITY,
-} = require("../database/queries/health_facilities-query.js");
+} = require("../database/queries/health-facility-query.js");
 
 // CREATE
 const createHealthFacility = async (
@@ -17,21 +17,24 @@ const createHealthFacility = async (
   contact_number,
   emergency_number,
   contact_person,
-  status,
+  status
 ) => {
   if (!facility_name || !facility_type) {
     throw new Error("Facility name and facility type are required.");
   }
 
-  const [result] = await db.query(CREATE_HEALTH_FACILITY, [
-    facility_name,
-    facility_type,
-    address,
-    contact_number,
-    emergency_number,
-    contact_person,
-    status,
-  ]);
+  const [result] = await db.query(
+    CREATE_HEALTH_FACILITY,
+    [
+      facility_name,
+      facility_type,
+      address,
+      contact_number,
+      emergency_number,
+      contact_person,
+      status,
+    ]
+  );
 
   return result;
 };
@@ -48,7 +51,10 @@ const findHealthFacilityById = async (id) => {
     throw new Error("Health facility ID is required.");
   }
 
-  const [rows] = await db.query(FIND_HEALTH_FACILITY_BY_ID, [id]);
+  const [rows] = await db.query(
+    FIND_HEALTH_FACILITY_BY_ID,
+    [id]
+  );
 
   return rows[0] || null;
 };
@@ -59,7 +65,10 @@ const findHealthFacilityByName = async (facility_name) => {
     throw new Error("Facility name is required.");
   }
 
-  const [rows] = await db.query(FIND_HEALTH_FACILITY_BY_NAME, [facility_name]);
+  const [rows] = await db.query(
+    FIND_HEALTH_FACILITY_BY_NAME,
+    [facility_name]
+  );
 
   return rows[0] || null;
 };
@@ -73,7 +82,7 @@ const updateHealthFacility = async (
   contact_number,
   emergency_number,
   contact_person,
-  status,
+  status
 ) => {
   if (!id) {
     throw new Error("Health facility ID is required.");
@@ -83,16 +92,19 @@ const updateHealthFacility = async (
     throw new Error("Facility name and facility type are required.");
   }
 
-  const [result] = await db.query(UPDATE_HEALTH_FACILITY, [
-    facility_name,
-    facility_type,
-    address,
-    contact_number,
-    emergency_number,
-    contact_person,
-    status,
-    id,
-  ]);
+  const [result] = await db.query(
+    UPDATE_HEALTH_FACILITY,
+    [
+      facility_name,
+      facility_type,
+      address,
+      contact_number,
+      emergency_number,
+      contact_person,
+      status,
+      id,
+    ]
+  );
 
   return result;
 };
@@ -103,7 +115,10 @@ const deleteHealthFacility = async (id) => {
     throw new Error("Health facility ID is required.");
   }
 
-  const [result] = await db.query(DELETE_HEALTH_FACILITY, [id]);
+  const [result] = await db.query(
+    DELETE_HEALTH_FACILITY,
+    [id]
+  );
 
   return result;
 };

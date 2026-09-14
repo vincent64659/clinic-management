@@ -7,22 +7,34 @@ const {
   FIND_STUDENT_BY_ACCOUNT_ID,
   UPDATE_STUDENT,
   DELETE_STUDENT,
-} = require("../database/queries/students-query.js");
+} = require("../database/queries/student-query.js");
 
 // CREATE
-const createStudent = async (grade_section_id, account_id, lastname, firstname, middlename, contact_no) => {
+const createStudent = async (
+  grade_section_id,
+  account_id,
+  lastname,
+  firstname,
+  middlename,
+  contact_no
+) => {
   if (!grade_section_id || !lastname || !firstname) {
-    throw new Error("Grade section ID, lastname, and firstname are required.");
+    throw new Error(
+      "Grade section ID, lastname, and firstname are required."
+    );
   }
 
-  const [result] = await db.query(CREATE_STUDENT, [
-    grade_section_id,
-    account_id,
-    lastname,
-    firstname,
-    middlename,
-    contact_no,
-  ]);
+  const [result] = await db.query(
+    CREATE_STUDENT,
+    [
+      grade_section_id,
+      account_id,
+      lastname,
+      firstname,
+      middlename,
+      contact_no,
+    ]
+  );
 
   return result;
 };
@@ -39,7 +51,10 @@ const findStudentById = async (id) => {
     throw new Error("Student ID is required.");
   }
 
-  const [rows] = await db.query(FIND_STUDENT_BY_ID, [id]);
+  const [rows] = await db.query(
+    FIND_STUDENT_BY_ID,
+    [id]
+  );
 
   return rows[0] || null;
 };
@@ -50,30 +65,46 @@ const findStudentByAccountId = async (account_id) => {
     throw new Error("Account ID is required.");
   }
 
-  const [rows] = await db.query(FIND_STUDENT_BY_ACCOUNT_ID, [account_id]);
+  const [rows] = await db.query(
+    FIND_STUDENT_BY_ACCOUNT_ID,
+    [account_id]
+  );
 
   return rows[0] || null;
 };
 
 // UPDATE
-const updateStudent = async (id, grade_section_id, account_id, lastname, firstname, middlename, contact_no) => {
+const updateStudent = async (
+  id,
+  grade_section_id,
+  account_id,
+  lastname,
+  firstname,
+  middlename,
+  contact_no
+) => {
   if (!id) {
     throw new Error("Student ID is required.");
   }
 
   if (!grade_section_id || !lastname || !firstname) {
-    throw new Error("Grade section ID, lastname, and firstname are required.");
+    throw new Error(
+      "Grade section ID, lastname, and firstname are required."
+    );
   }
 
-  const [result] = await db.query(UPDATE_STUDENT, [
-    grade_section_id,
-    account_id,
-    lastname,
-    firstname,
-    middlename,
-    contact_no,
-    id,
-  ]);
+  const [result] = await db.query(
+    UPDATE_STUDENT,
+    [
+      grade_section_id,
+      account_id,
+      lastname,
+      firstname,
+      middlename,
+      contact_no,
+      id,
+    ]
+  );
 
   return result;
 };
@@ -84,7 +115,10 @@ const deleteStudent = async (id) => {
     throw new Error("Student ID is required.");
   }
 
-  const [result] = await db.query(DELETE_STUDENT, [id]);
+  const [result] = await db.query(
+    DELETE_STUDENT,
+    [id]
+  );
 
   return result;
 };
