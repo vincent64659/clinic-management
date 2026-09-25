@@ -11,8 +11,8 @@ const {
 
 // CREATE
 const createRole = async (name, description) => {
-  if (!name) {
-    throw new Error("Role name is required.");
+  if (!name || !description || description == null) {
+    throw new Error("Role name and description is required.");
   }
 
   const [result] = await db.query(CREATE_ROLE, [name, description]);
@@ -54,8 +54,8 @@ const updateRole = async (id, name, description) => {
     throw new Error("Role ID is required.");
   }
 
-  if (!name) {
-    throw new Error("Role name is required.");
+  if (!name || !description || description === null) {
+    throw new Error("Role name and description is required.");
   }
 
   const [result] = await db.query(UPDATE_ROLE, [name, description, id]);

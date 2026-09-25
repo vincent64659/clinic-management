@@ -1,6 +1,6 @@
 const db = require("../config/database.js");
 const {
-  CREATE_ACCOUNTS,
+  CREATE_ACCOUNT,
   FIND_ALL_ACCOUNTS,
   FIND_ACCOUNT_BY_ID,
   FIND_ACCOUNT_BY_USERNAME,
@@ -13,7 +13,7 @@ const createAccount = async (username, password) => {
     throw new Error("Username and password are required.");
   }
 
-  const [result] = await db.query(CREATE_ACCOUNTS, [username, password]);
+  const [result] = await db.query(CREATE_ACCOUNT, [username, password]);
 
   return result;
 };
@@ -36,7 +36,7 @@ const findAccountById = async (id) => {
 
 const findAccountByUsername = async (username) => {
   if (!username) {
-    throw new Error("Account ID is required.");
+    throw new Error("Username is required.");
   }
 
   const [rows] = await db.query(FIND_ACCOUNT_BY_USERNAME, [username]);
@@ -45,8 +45,8 @@ const findAccountByUsername = async (username) => {
 };
 
 const updateAccount = async (id, username, password) => {
-  if (!Id) {
-    throw new Error(" Accounts ID is required");
+  if (!id) {
+    throw new Error("Account ID, username, and password are required.");
   }
 
   const [result] = await db.query(UPDATE_ACCOUNT, [username, password, id]);
@@ -55,11 +55,11 @@ const updateAccount = async (id, username, password) => {
 };
 
 const deleteAccount = async (id) => {
-  if (!Where) {
-    throw new Error(" Accounts ID is required");
+  if (!id) {
+    throw new Error("Account ID is required.");
   }
 
-  const [result] = await db.query(DELETE_ACCOUNT, [where_id, id]);
+  const [result] = await db.query(DELETE_ACCOUNT, [id]);
 
   return result;
 };
