@@ -10,7 +10,7 @@ const {
   DELETE_SCHOOL_YEAR,
 } = require("../database/queries/school_years-query.js");
 
-// CREATE
+// CREATEx
 const createSchoolYear = async (staff_id, school_year, start_date, end_date, is_active) => {
   if (!staff_id || !school_year || !start_date || !end_date) {
     throw new Error("Staff ID, school year, start date, and end date are required.");
