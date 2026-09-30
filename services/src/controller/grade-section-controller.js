@@ -1,20 +1,25 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-
-const gradeSectionsService = require("../services/grade_sections-service.js");
+const gradeSectionsService = require("../services/grade_section-service.js");
 
 const createGradeSection = async (req, res) => {
   try {
-    const {school_year_id,grade_n_strand_id,adviser_staff_id,section_name,description,} = req.body;
+    const { school_year_id, grade_n_strand_id, adviser_staff_id, section_name, description } = req.body;
 
-    const result = await gradeSectionsService.createGradeSection(school_year_id,grade_n_strand_id,adviser_staff_id,section_name,description);
+    const result = await gradeSectionsService.createGradeSection(
+      school_year_id,
+      grade_n_strand_id,
+      adviser_staff_id,
+      section_name,
+      description,
+    );
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
-      message: "Created grade section successfully.",
+      message: "Grade section created successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Created grade section error:", error);
+    console.error("Create grade section error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -29,11 +34,11 @@ const findAllGradeSections = async (req, res) => {
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find all grade sections fetched successfully.",
+      message: "All grade sections fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Failed find all grade sections error:", error);
+    console.error("Find all grade sections error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -51,17 +56,17 @@ const findGradeSectionById = async (req, res) => {
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "Grade section by id not found.",
+        message: "Grade section not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find grade section by id fetched successfully.",
+      message: "Grade section fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Find grade section by id error:", error);
+    console.error("Find grade section by ID error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -74,21 +79,22 @@ const findGradeSectionsBySchoolYear = async (req, res) => {
   try {
     const { school_year_id } = req.params;
 
-    const result =
-      await gradeSectionsService.findGradeSectionsBySchoolYear(
-        school_year_id
-      );
+    const result = await gradeSectionsService.findGradeSectionsBySchoolYear(school_year_id);
+
+    if (!result || result.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "No grade sections found for the specified school year.",
+      });
+    }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find grade sections by school year fetched successfully.",
+      message: "Grade sections by school year fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find grade sections by school year error:",
-      error
-    );
+    console.error("Find grade sections by school year error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -101,22 +107,22 @@ const findGradeSectionsByGradeNStrand = async (req, res) => {
   try {
     const { grade_n_strand_id } = req.params;
 
-    const result =
-      await gradeSectionsService.findGradeSectionsByGradeNStrand(
-        grade_n_strand_id
-      );
+    const result = await gradeSectionsService.findGradeSectionsByGradeNStrand(grade_n_strand_id);
+
+    if (!result || result.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "No grade sections found for the specified grade and strand.",
+      });
+    }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message:
-        "Find grade sections by grade and strand fetched successfully.",
+      message: "Grade sections by grade and strand fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find grade sections by grade and strand error:",
-      error
-    );
+    console.error("Find grade sections by grade and strand error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -129,21 +135,22 @@ const findGradeSectionsByAdviser = async (req, res) => {
   try {
     const { adviser_staff_id } = req.params;
 
-    const result =
-      await gradeSectionsService.findGradeSectionsByAdviser(
-        adviser_staff_id
-      );
+    const result = await gradeSectionsService.findGradeSectionsByAdviser(adviser_staff_id);
+
+    if (!result || result.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "No grade sections found for the specified adviser.",
+      });
+    }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find grade sections by adviser fetched successfully.",
+      message: "Grade sections by adviser fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find grade sections by adviser error:",
-      error
-    );
+    console.error("Find grade sections by adviser error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -154,17 +161,9 @@ const findGradeSectionsByAdviser = async (req, res) => {
 
 const findGradeSection = async (req, res) => {
   try {
-    const {
-      school_year_id,
-      grade_n_strand_id,
-      section_name,
-    } = req.query;
+    const { school_year_id, grade_n_strand_id, section_name } = req.query;
 
-    const result = await gradeSectionsService.findGradeSection(
-      school_year_id,
-      grade_n_strand_id,
-      section_name
-    );
+    const result = await gradeSectionsService.findGradeSection(school_year_id, grade_n_strand_id, section_name);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -175,7 +174,7 @@ const findGradeSection = async (req, res) => {
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find grade section fetched successfully.",
+      message: "Grade section fetched successfully.",
       data: result,
     });
   } catch (error) {
@@ -192,13 +191,7 @@ const updateGradeSection = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {
-      school_year_id,
-      grade_n_strand_id,
-      adviser_staff_id,
-      section_name,
-      description,
-    } = req.body;
+    const { school_year_id, grade_n_strand_id, adviser_staff_id, section_name, description } = req.body;
 
     const result = await gradeSectionsService.updateGradeSection(
       id,
@@ -206,10 +199,10 @@ const updateGradeSection = async (req, res) => {
       grade_n_strand_id,
       adviser_staff_id,
       section_name,
-      description
+      description,
     );
 
-    if (!result) {
+    if (!result || result.affectedRows === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
         message: "Grade section not found.",
@@ -237,10 +230,10 @@ const deleteGradeSection = async (req, res) => {
 
     const result = await gradeSectionsService.deleteGradeSection(id);
 
-    if (!result) {
+    if (!result || result.affectedRows === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "Grade section by id not found.",
+        message: "Grade section not found.",
       });
     }
 

@@ -1,12 +1,18 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-
 const studentsService = require("../services/students-service.js");
 
 const createStudent = async (req, res) => {
   try {
-    const {grade_section_id,account_id,lastname,firstname,middlename,contact_no,} = req.body;
+    const { grade_section_id, account_id, lastname, firstname, middlename, contact_no } = req.body;
 
-    const result = await studentsService.createStudent(grade_section_id,account_id,lastname,firstname,middlename,contact_no);
+    const result = await studentsService.createStudent(
+      grade_section_id,
+      account_id,
+      lastname,
+      firstname,
+      middlename,
+      contact_no,
+    );
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
@@ -22,7 +28,6 @@ const createStudent = async (req, res) => {
     });
   }
 };
-
 
 const findAllStudents = async (req, res) => {
   try {
@@ -42,7 +47,6 @@ const findAllStudents = async (req, res) => {
     });
   }
 };
-
 
 const findStudentById = async (req, res) => {
   try {
@@ -72,13 +76,11 @@ const findStudentById = async (req, res) => {
   }
 };
 
-
 const findStudentByAccountId = async (req, res) => {
   try {
     const { account_id } = req.params;
 
-    const result =
-      await studentsService.findStudentByAccountId(account_id);
+    const result = await studentsService.findStudentByAccountId(account_id);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -102,14 +104,21 @@ const findStudentByAccountId = async (req, res) => {
   }
 };
 
-
 const updateStudent = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {grade_section_id,account_id,lastname,firstname,middlename,contact_no,} = req.body;
+    const { grade_section_id, account_id, lastname, firstname, middlename, contact_no } = req.body;
 
-    const result = await studentsService.updateStudent(id,grade_section_id,account_id,lastname,firstname,middlename,contact_no);
+    const result = await studentsService.updateStudent(
+      id,
+      grade_section_id,
+      account_id,
+      lastname,
+      firstname,
+      middlename,
+      contact_no,
+    );
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -132,7 +141,6 @@ const updateStudent = async (req, res) => {
     });
   }
 };
-
 
 const deleteStudent = async (req, res) => {
   try {

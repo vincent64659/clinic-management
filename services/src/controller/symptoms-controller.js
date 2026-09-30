@@ -4,9 +4,9 @@ const symptomsService = require("../services/symptoms-service.js");
 
 const createSymptom = async (req, res) => {
   try {
-    const {symptom_name,description,status,} = req.body;
+    const { symptom_name, description, status } = req.body;
 
-    const result = await symptomsService.createSymptom(symptom_name,description,status);
+    const result = await symptomsService.createSymptom(symptom_name, description, status);
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
@@ -22,7 +22,6 @@ const createSymptom = async (req, res) => {
     });
   }
 };
-
 
 const findAllSymptoms = async (req, res) => {
   try {
@@ -42,7 +41,6 @@ const findAllSymptoms = async (req, res) => {
     });
   }
 };
-
 
 const findSymptomById = async (req, res) => {
   try {
@@ -72,13 +70,11 @@ const findSymptomById = async (req, res) => {
   }
 };
 
-
 const findSymptomByName = async (req, res) => {
   try {
     const { symptom_name } = req.params;
 
-    const result =
-      await symptomsService.findSymptomByName(symptom_name);
+    const result = await symptomsService.findSymptomByName(symptom_name);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -102,14 +98,13 @@ const findSymptomByName = async (req, res) => {
   }
 };
 
-
 const updateSymptom = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {symptom_name,description,status,} = req.body;
+    const { symptom_name, description, status } = req.body;
 
-    const result = await symptomsService.updateSymptom(id,symptom_name,description,status);
+    const result = await symptomsService.updateSymptom(id, symptom_name, description, status);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -132,7 +127,6 @@ const updateSymptom = async (req, res) => {
     });
   }
 };
-
 
 const deleteSymptom = async (req, res) => {
   try {

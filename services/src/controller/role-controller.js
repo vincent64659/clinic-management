@@ -1,7 +1,5 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-
 const roleService = require("../services/role-service.js");
-
 
 const createRole = async (req, res) => {
   try {
@@ -24,7 +22,6 @@ const createRole = async (req, res) => {
   }
 };
 
-
 const findAllRoles = async (req, res) => {
   try {
     const result = await roleService.findAllRoles();
@@ -43,7 +40,6 @@ const findAllRoles = async (req, res) => {
     });
   }
 };
-
 
 const findRoleById = async (req, res) => {
   try {
@@ -73,7 +69,6 @@ const findRoleById = async (req, res) => {
   }
 };
 
-
 const findRoleByName = async (req, res) => {
   try {
     const { name } = req.params;
@@ -102,13 +97,12 @@ const findRoleByName = async (req, res) => {
   }
 };
 
-
 const updateRole = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description } = req.body;
 
-    const result = await roleService.updateRole(id,name,description);
+    const result = await roleService.updateRole(id, name, description);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -131,7 +125,6 @@ const updateRole = async (req, res) => {
     });
   }
 };
-
 
 const deleteRole = async (req, res) => {
   try {

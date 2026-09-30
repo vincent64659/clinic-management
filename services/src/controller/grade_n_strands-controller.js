@@ -1,18 +1,19 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-const gradenstrandService = require("../services/grade_n_strand-service.js");
+const gradenstrandService = require("../services/grade_n_strands-service.js");
 
 const createGradeNStrand = async (req, res) => {
   try {
-    const { grade_leveel, srtand, description } = req.body;
-    const result = await gradenstrandService.createGradeNStrand(grade_leveel, srtand, description);
+    const { grade_level, strand, description } = req.body;
+
+    const result = await gradenstrandService.createGradeNStrand(grade_level, strand, description);
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
-      message: "Created grade n strand successfully.",
+      message: "Grade N Strand created successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Created grade n strand error:", error);
+    console.error("Create grade N strand error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -27,11 +28,11 @@ const findAllGradeNStrands = async (req, res) => {
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find all grade n strand fetched successfully.",
+      message: "All grade N strands fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Failed find all grade n strand error:", error);
+    console.error("Find all grade N strands error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -40,25 +41,26 @@ const findAllGradeNStrands = async (req, res) => {
   }
 };
 
-const findGradeNStrandByid = async (req, res) => {
+const findGradeNStrandById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await findGradeNstrandByIdService.findGradeNstrandByid(id);
+    const result = await gradenstrandService.findGradeNStrandById(id);
+
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "Grade N Strand by id not found.",
+        message: "Grade N Strand not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find grdae n strand by id fetched successfully.",
+      message: "Grade N Strand fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Find grade n strand by id error:", error);
+    console.error("Find grade N strand by ID error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -69,23 +71,24 @@ const findGradeNStrandByid = async (req, res) => {
 
 const findGradeNStrand = async (req, res) => {
   try {
-    const { grade_level, strand} = req.params;
+    const { grade_level, strand } = req.params;
 
-    const result = await findfindClinicVisitByIdService.findGradeNStrand(grade_level, strand);
+    const result = await gradenstrandService.findGradeNStrand(grade_level, strand);
+
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "Grade N Strand by id not found.",
+        message: "Grade N Strand not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Find grade n strand by id fetched successfully.",
+      message: "Grade N Strand fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Find clinic visit by id error:", error);
+    console.error("Find grade N strand error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -97,24 +100,25 @@ const findGradeNStrand = async (req, res) => {
 const updateGradeNStrand = async (req, res) => {
   try {
     const { id } = req.params;
-    const {health_record_id,visit_date,time_in,time_out,reason,symptoms,treatment,remarks,recorded_by, } = req.body;
 
-    const result = await gradenstrandServicee.updateGradeNStrand(id,health_record_id,visit_date,time_in,time_out,reason,symptoms,treatment,remarks,recorded_by,);
+    const { grade_level, strand, description } = req.body;
 
-    if (!result) {
+    const result = await gradenstrandService.updateGradeNStrand(id, grade_level, strand, description);
+
+    if (!result || result.affectedRows === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "Clinic visit not found.",
+        message: "Grade N Strand not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: " Grade n strand updated successfully.",
+      message: "Grade N Strand updated successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Update grade n strand error:", error);
+    console.error("Update grade N strand error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -127,20 +131,22 @@ const deleteGradeNStrand = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await gradenstrandService.deleteGradeNStrand (id);
-    if (!result) {
+    const result = await gradenstrandService.deleteGradeNStrand(id);
+
+    if (!result || result.affectedRows === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "Grade N Strand by id not found.",
+        message: "Grade N Strand not found.",
       });
     }
+
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: " Grade N Strand deleted successfully.",
+      message: "Grade N Strand deleted successfully.",
       data: result,
     });
   } catch (error) {
-    console.error("Delete grade n strand error:", error);
+    console.error("Delete grade N strand error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -152,7 +158,7 @@ const deleteGradeNStrand = async (req, res) => {
 module.exports = {
   createGradeNStrand,
   findAllGradeNStrands,
-  findGradeNStrandByid,
+  findGradeNStrandById,
   findGradeNStrand,
   updateGradeNStrand,
   deleteGradeNStrand,

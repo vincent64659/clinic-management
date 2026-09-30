@@ -1,156 +1,159 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-
-const gradeNStrandsService = require("../services/grade_n_strands-service.js");
+const accountsService = require("../services/accounts-service.js");
 
 const createAccount = async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    const result = await accountService.createAccount( username, password);
+    const result = await accountsService.createAccount(username, password);
 
     return res.status(StatusCodes.CREATED).json({
-      status: StatusCodes.CREATED,
-      message: "Account created successfully.",
+      success: true,
+      message: "Created account successfully.",
       data: result,
     });
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      status: StatusCodes.BAD_REQUEST,
-      message: error.message || ReasonPhrases.BAD_REQUEST,
-    });
-  }
-};
+    console.error("Created account error:", error);
 
-const findAllAccountsController = async (req, res) => {
-  try {
-    const accounts = await findAllAccounts();
-
-    return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
-      message: "Accounts retrieved successfully.",
-      data: accounts,
-    });
-  } catch (error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      status: StatusCodes.INTERNAL_SERVER_ERROR,
+      success: false,
       message: error.message || ReasonPhrases.INTERNAL_SERVER_ERROR,
     });
   }
 };
 
-const findAccountByIdController = async (req, res) => {
+const findAllAccounts = async (req, res) => {
+  try {
+    const result = await accountsService.findAllAccounts();
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Find all accounts fetched successfully.",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Failed find all accounts error:", error);
+
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message || ReasonPhrases.INTERNAL_SERVER_ERROR,
+    });
+  }
+};
+
+const findAccountById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const account = await findAccountById(id);
-
-    if (!account) {
+    const result = await accountsService.findAccountById(id);
+    if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        status: StatusCodes.NOT_FOUND,
-        message: "Account not found.",
+        success: false,
+        message: "Account by id not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
-      message: "Account retrieved successfully.",
-      data: account,
+      success: true,
+      message: "Find account by id fetched successfully.",
+      data: result,
     });
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      status: StatusCodes.BAD_REQUEST,
-      message: error.message || ReasonPhrases.BAD_REQUEST,
+    console.error("Find account by id error:", error);
+
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message || ReasonPhrases.INTERNAL_SERVER_ERROR,
     });
   }
 };
 
-
-const findAccountByUsernameController = async (req, res) => {
+const findAccountByUsername = async (req, res) => {
   try {
     const { username } = req.params;
 
-    const account = await findAccountByUsername(username);
-
-    if (!account) {
+    const result = await accountsService.findAccountByUsername(username);
+    if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        status: StatusCodes.NOT_FOUND,
-        message: "Account not found.",
+        success: false,
+        message: "Account by username not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
-      message: "Account retrieved successfully.",
-      data: account,
+      success: true,
+      message: "Find account by username fetched successfully.",
+      data: result,
     });
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      status: StatusCodes.BAD_REQUEST,
-      message: error.message || ReasonPhrases.BAD_REQUEST,
+    console.error("Find account by username error:", error);
+
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message || ReasonPhrases.INTERNAL_SERVER_ERROR,
     });
   }
 };
 
-
-const updateAccountController = async (req, res) => {
+const updateAccount = async (req, res) => {
   try {
     const { id } = req.params;
     const { username, password } = req.body;
 
-    const result = await updateAccount(id, username, password);
+    const result = await accountsService.updateAccount(id, username, password);
 
-    if (result.affectedRows === 0) {
+    if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        status: StatusCodes.NOT_FOUND,
+        success: false,
         message: "Account not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
+      success: true,
       message: "Account updated successfully.",
       data: result,
     });
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      status: StatusCodes.BAD_REQUEST,
-      message: error.message || ReasonPhrases.BAD_REQUEST,
+    console.error("Update account error:", error);
+
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message || ReasonPhrases.INTERNAL_SERVER_ERROR,
     });
   }
 };
 
-
-const deleteAccountController = async (req, res) => {
+const deleteAccount = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await deleteAccount(id);
-
-    if (result.affectedRows === 0) {
+    const result = await accountsService.deleteAccount(id);
+    if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        status: StatusCodes.NOT_FOUND,
-        message: "Account not found.",
+        success: false,
+        message: "Account by id not found.",
       });
     }
-
     return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
+      success: true,
       message: "Account deleted successfully.",
       data: result,
     });
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      status: StatusCodes.BAD_REQUEST,
-      message: error.message || ReasonPhrases.BAD_REQUEST,
+    console.error("Delete account error:", error);
+
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message || ReasonPhrases.INTERNAL_SERVER_ERROR,
     });
   }
 };
 
 module.exports = {
-  createAccountController,
-  findAllAccountsController,
-  findAccountByIdController,
-  findAccountByUsernameController,
-  updateAccountController,
-  deleteAccountController,
+  createAccount,
+  findAllAccounts,
+  findAccountById,
+  findAccountByUsername,
+  updateAccount,
+  deleteAccount,
 };

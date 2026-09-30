@@ -2,12 +2,18 @@ const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
 const medicalInventoryService = require("../services/medical_inventory-service.js");
 
-
 const createMedicalInventory = async (req, res) => {
   try {
-    const {medical_item_id,transaction_type,quantity,transaction_date,remarks,recorded_by,} = req.body;
+    const { medical_item_id, transaction_type, quantity, transaction_date, remarks, recorded_by } = req.body;
 
-    const result = await medicalInventoryService.createMedicalInventory(medical_item_id,transaction_type,quantity,transaction_date,remarks,recorded_by);
+    const result = await medicalInventoryService.createMedicalInventory(
+      medical_item_id,
+      transaction_type,
+      quantity,
+      transaction_date,
+      remarks,
+      recorded_by,
+    );
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
@@ -24,11 +30,9 @@ const createMedicalInventory = async (req, res) => {
   }
 };
 
-
 const findAllMedicalInventory = async (req, res) => {
   try {
-    const result =
-      await medicalInventoryService.findAllMedicalInventory();
+    const result = await medicalInventoryService.findAllMedicalInventory();
 
     return res.status(StatusCodes.OK).json({
       success: true,
@@ -36,10 +40,7 @@ const findAllMedicalInventory = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Failed find all medical inventory error:",
-      error
-    );
+    console.error("Failed find all medical inventory error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -52,8 +53,7 @@ const findMedicalInventoryById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result =
-      await medicalInventoryService.findMedicalInventoryById(id);
+    const result = await medicalInventoryService.findMedicalInventoryById(id);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -64,15 +64,11 @@ const findMedicalInventoryById = async (req, res) => {
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message:
-        "Find medical inventory by id fetched successfully.",
+      message: "Find medical inventory by id fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find medical inventory by id error:",
-      error
-    );
+    console.error("Find medical inventory by id error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -80,28 +76,20 @@ const findMedicalInventoryById = async (req, res) => {
     });
   }
 };
-
 
 const findMedicalInventoryByItemId = async (req, res) => {
   try {
     const { medical_item_id } = req.params;
 
-    const result =
-      await medicalInventoryService.findMedicalInventoryByItemId(
-        medical_item_id
-      );
+    const result = await medicalInventoryService.findMedicalInventoryByItemId(medical_item_id);
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message:
-        "Find medical inventory by medical item id fetched successfully.",
+      message: "Find medical inventory by medical item id fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find medical inventory by medical item id error:",
-      error
-    );
+    console.error("Find medical inventory by medical item id error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -110,27 +98,19 @@ const findMedicalInventoryByItemId = async (req, res) => {
   }
 };
 
-
 const findMedicalInventoryByRecordedBy = async (req, res) => {
   try {
     const { recorded_by } = req.params;
 
-    const result =
-      await medicalInventoryService.findMedicalInventoryByRecordedBy(
-        recorded_by
-      );
+    const result = await medicalInventoryService.findMedicalInventoryByRecordedBy(recorded_by);
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message:
-        "Find medical inventory by recorded by fetched successfully.",
+      message: "Find medical inventory by recorded by fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find medical inventory by recorded by error:",
-      error
-    );
+    console.error("Find medical inventory by recorded by error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -143,10 +123,17 @@ const updateMedicalInventory = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {medical_item_id,transaction_type,quantity,transaction_date,remarks,recorded_by,} = req.body;
+    const { medical_item_id, transaction_type, quantity, transaction_date, remarks, recorded_by } = req.body;
 
-    const result =
-      await medicalInventoryService.updateMedicalInventory(id,medical_item_id,transaction_type,quantity,transaction_date,remarks,recorded_by);
+    const result = await medicalInventoryService.updateMedicalInventory(
+      id,
+      medical_item_id,
+      transaction_type,
+      quantity,
+      transaction_date,
+      remarks,
+      recorded_by,
+    );
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -170,13 +157,11 @@ const updateMedicalInventory = async (req, res) => {
   }
 };
 
-
 const deleteMedicalInventory = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result =
-      await medicalInventoryService.deleteMedicalInventory(id);
+    const result = await medicalInventoryService.deleteMedicalInventory(id);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({

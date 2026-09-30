@@ -4,9 +4,31 @@ const healthRecordsService = require("../services/health_records-service.js");
 
 const createHealthRecord = async (req, res) => {
   try {
-    const {student_id,staff_id,blood_type,allergies,medical_condition,current_medications,emergency_contact_name,emergency_contact_number,emergency_contact_relationship,notes,} = req.body;
+    const {
+      student_id,
+      staff_id,
+      blood_type,
+      allergies,
+      medical_condition,
+      current_medications,
+      emergency_contact_name,
+      emergency_contact_number,
+      emergency_contact_relationship,
+      notes,
+    } = req.body;
 
-    const result = await healthRecordsService.createHealthRecord(student_id,staff_id,blood_type,allergies,medical_condition,current_medications,emergency_contact_name,emergency_contact_number,emergency_contact_relationship,notes);
+    const result = await healthRecordsService.createHealthRecord(
+      student_id,
+      staff_id,
+      blood_type,
+      allergies,
+      medical_condition,
+      current_medications,
+      emergency_contact_name,
+      emergency_contact_number,
+      emergency_contact_relationship,
+      notes,
+    );
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
@@ -23,11 +45,9 @@ const createHealthRecord = async (req, res) => {
   }
 };
 
-
 const findAllHealthRecords = async (req, res) => {
   try {
-    const result =
-      await healthRecordsService.findAllHealthRecords();
+    const result = await healthRecordsService.findAllHealthRecords();
 
     return res.status(StatusCodes.OK).json({
       success: true,
@@ -44,13 +64,11 @@ const findAllHealthRecords = async (req, res) => {
   }
 };
 
-
 const findHealthRecordById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result =
-      await healthRecordsService.findHealthRecordById(id);
+    const result = await healthRecordsService.findHealthRecordById(id);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -74,15 +92,11 @@ const findHealthRecordById = async (req, res) => {
   }
 };
 
-
 const findHealthRecordByStudentId = async (req, res) => {
   try {
     const { student_id } = req.params;
 
-    const result =
-      await healthRecordsService.findHealthRecordByStudentId(
-        student_id
-      );
+    const result = await healthRecordsService.findHealthRecordByStudentId(student_id);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -93,15 +107,11 @@ const findHealthRecordByStudentId = async (req, res) => {
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message:
-        "Find health record by student id fetched successfully.",
+      message: "Find health record by student id fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find health record by student id error:",
-      error
-    );
+    console.error("Find health record by student id error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -110,15 +120,11 @@ const findHealthRecordByStudentId = async (req, res) => {
   }
 };
 
-
 const findHealthRecordByStaffId = async (req, res) => {
   try {
     const { staff_id } = req.params;
 
-    const result =
-      await healthRecordsService.findHealthRecordByStaffId(
-        staff_id
-      );
+    const result = await healthRecordsService.findHealthRecordByStaffId(staff_id);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -129,15 +135,11 @@ const findHealthRecordByStaffId = async (req, res) => {
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message:
-        "Find health record by staff id fetched successfully.",
+      message: "Find health record by staff id fetched successfully.",
       data: result,
     });
   } catch (error) {
-    console.error(
-      "Find health record by staff id error:",
-      error
-    );
+    console.error("Find health record by staff id error:", error);
 
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -150,9 +152,32 @@ const updateHealthRecord = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {student_id,staff_id,blood_type,allergies,medical_condition,current_medications,emergency_contact_name,emergency_contact_number,emergency_contact_relationship,notes,} = req.body;
+    const {
+      student_id,
+      staff_id,
+      blood_type,
+      allergies,
+      medical_condition,
+      current_medications,
+      emergency_contact_name,
+      emergency_contact_number,
+      emergency_contact_relationship,
+      notes,
+    } = req.body;
 
-    const result = await healthRecordsService.updateHealthRecord(id,student_id,staff_id,blood_type,allergies,medical_condition,current_medications,emergency_contact_name,emergency_contact_number,emergency_contact_relationship,notes);
+    const result = await healthRecordsService.updateHealthRecord(
+      id,
+      student_id,
+      staff_id,
+      blood_type,
+      allergies,
+      medical_condition,
+      current_medications,
+      emergency_contact_name,
+      emergency_contact_number,
+      emergency_contact_relationship,
+      notes,
+    );
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -180,8 +205,7 @@ const deleteHealthRecord = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result =
-      await healthRecordsService.deleteHealthRecord(id);
+    const result = await healthRecordsService.deleteHealthRecord(id);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({

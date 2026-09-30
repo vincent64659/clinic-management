@@ -4,9 +4,9 @@ const staffService = require("../services/staff-service.js");
 
 const createStaff = async (req, res) => {
   try {
-    const {account_id,role_id,lastname,firstname,contact_no,email,} = req.body;
+    const { account_id, role_id, lastname, firstname, contact_no, email } = req.body;
 
-    const result = await staffService.createStaff(account_id,role_id,lastname,firstname,contact_no,email);
+    const result = await staffService.createStaff(account_id, role_id, lastname, firstname, contact_no, email);
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
@@ -22,7 +22,6 @@ const createStaff = async (req, res) => {
     });
   }
 };
-
 
 const findAllStaffs = async (req, res) => {
   try {
@@ -42,7 +41,6 @@ const findAllStaffs = async (req, res) => {
     });
   }
 };
-
 
 const findStaffById = async (req, res) => {
   try {
@@ -72,7 +70,6 @@ const findStaffById = async (req, res) => {
   }
 };
 
-
 const findStaffByAccountId = async (req, res) => {
   try {
     const { account_id } = req.params;
@@ -100,7 +97,6 @@ const findStaffByAccountId = async (req, res) => {
     });
   }
 };
-
 
 const findStaffByEmail = async (req, res) => {
   try {
@@ -130,14 +126,13 @@ const findStaffByEmail = async (req, res) => {
   }
 };
 
-
 const updateStaff = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {account_id,role_id,lastname,firstname,contact_no,email,} = req.body;
+    const { account_id, role_id, lastname, firstname, contact_no, email } = req.body;
 
-    const result = await staffService.updateStaff(id,account_id,role_id,lastname,firstname,contact_no,email);
+    const result = await staffService.updateStaff(id, account_id, role_id, lastname, firstname, contact_no, email);
 
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -160,7 +155,6 @@ const updateStaff = async (req, res) => {
     });
   }
 };
-
 
 const deleteStaff = async (req, res) => {
   try {
