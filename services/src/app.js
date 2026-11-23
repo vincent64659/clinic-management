@@ -11,6 +11,8 @@ const accountsRoutes = require("./routes/accounts-routes.js");
 const healthFacilitiesRoutes = require("./routes/health_facilities-routes.js");
 const medicalItemsRoutes = require("./routes/medical_items-routes.js");
 const schoolYearRoutes = require("./routes/school_year-routes.js");
+const symptoms = require("./routes/symptoms-routes.js");
+const student = require("./routes/staff-routes.js");
 
 const app = express();
 
@@ -63,6 +65,8 @@ app.use("/api/accounts", accountsRoutes);
 app.use("/api/health_facilities", healthFacilitiesRoutes);
 app.use("/api/medical_items", medicalItemsRoutes);
 app.use("/api/school_year", schoolYearRoutes);
+app.use("/api/symtpoms", symptomsRoutes);
+app.use("/api/student", studentRoutes);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(PROJECT_ROOT, "index.html"));
